@@ -38,10 +38,11 @@
             <a href="https://diegobarrosaraya.com/"><i class="fa-solid fa-house"></i> Home</a> |
             <a href="https://blog.diegobarrosaraya.com/"><i class="fa-solid fa-blog"></i> Blog</a> |
             <a href="https://docs.diegobarrosaraya.com/"><i class="fa-solid fa-book"></i> Docs</a>
+            <button class="theme-toggle" aria-label="Toggle dark/light mode" style="vertical-align:middle;"><i class="fa-solid fa-moon"></i></button>
         </nav>
     <div id="main-content" class="container">
 
-            <h1 style="text-align: center;">Diego Barros</h1>
+            <h1 style="text-align: center;">Diego Barros Araya</h1>
             <p style="text-align: center;">Senior IT Engineer & Technical Consultant</p>
             <!-- Placeholder for the photo -->
 
@@ -87,4 +88,19 @@
         </footer>
         </div>
     </body>
+<script>
+    const btn = document.querySelector('.theme-toggle');
+    btn && btn.addEventListener('click', () => {
+        const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        btn.innerHTML = theme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+    });
+    // On load, set theme from localStorage
+    const saved = localStorage.getItem('theme');
+    if(saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+        btn && (btn.innerHTML = saved === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>');
+    }
+</script>
 </html>
