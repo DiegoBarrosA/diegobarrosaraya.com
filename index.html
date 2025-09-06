@@ -39,41 +39,7 @@
             <a href="https://docs.diegobarrosaraya.com/">Docs</a>
         </nav>
     <div id="main-content" class="container">
-    <div style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; margin: 32px 0;">
-                <section style="margin: 48px 0;">
-                        <h2 style="color:#82aaff;">Featured Projects</h2>
-                        <div id="featured-projects" style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: center;"></div>
-                        <script>
-                        fetch('https://docs.diegobarrosaraya.com/projects.json')
-                            .then(r => r.json())
-                            .then(projects => {
-                                const container = document.getElementById('featured-projects');
-                                projects.forEach(project => {
-                                    const card = document.createElement('div');
-                                    card.style = 'background: #232946; color: #fff; border-radius: 16px; box-shadow: 0 2px 8px #0002; padding: 24px 28px; min-width: 320px; max-width: 480px; flex: 1 1 320px;';
-                                    card.innerHTML = `
-                                        <h3 style="margin-top:0;">${project.name}</h3>
-                                        <div style="font-size: 0.95em; color: #c3e88d; margin-bottom: 12px;">${project.excerpt || ''}</div>
-                                        <a href="${project.github}" style="color:#89ddff;">Ver en GitHub</a>
-                                        <a href="${project.url}" style="color:#89ddff; margin-left: 16px;">Ver documentación</a>
-                                    `;
-                                    container.appendChild(card);
-                                });
-                            })
-                            .catch(() => {
-                                document.getElementById('featured-projects').innerHTML = '<p style="color:#ffcb6b;">No se pudieron cargar los proyectos destacados.</p>';
-                            });
-                        </script>
-                </section>
-            <a href="https://blog.diegobarrosaraya.com/" style="display: block; background: #232946; color: #fff; border-radius: 16px; box-shadow: 0 2px 8px #0002; padding: 32px 40px; min-width: 220px; text-align: center; text-decoration: none; transition: transform 0.1s; font-size: 1.2em; font-weight: bold;">
-                Blog
-                <div style="font-size: 0.95em; font-weight: normal; margin-top: 12px; color: #c3e88d;">Articles, guides, and thoughts on open-source, Linux, and tech.</div>
-            </a>
-            <a href="https://docs.diegobarrosaraya.com/" style="display: block; background: #232946; color: #fff; border-radius: 16px; box-shadow: 0 2px 8px #0002; padding: 32px 40px; min-width: 220px; text-align: center; text-decoration: none; transition: transform 0.1s; font-size: 1.2em; font-weight: bold;">
-                Docs
-                <div style="font-size: 0.95em; font-weight: normal; margin-top: 12px; color: #c3e88d;">Documentation and project notes for my open-source work.</div>
-            </a>
-        </div>
+
             <h1>Diego Barros</h1>
             <p>Senior IT Engineer & Technical Consultant</p>
             <!-- Placeholder for the photo -->
@@ -107,27 +73,7 @@
                 Let’s connect to discuss IT innovation, team leadership, or how
                 technology can solve complex challenges.
             </p>
-            <h2>Contact</h2>
-            <p>
-                Email:
-                <a href="mailto:contact@diegobarrosaraya.com"
-                    >contact@diegobarrosaraya.com</a
-                >
-            </p>
-            <p>
-                LinkedIn:
-                <a
-                    href="https://linkedin.com/in/diegobarrosaraya"
-                    
-                    >linkedin.com/in/diegobarrosaraya</a
-                >
-            </p>
-            <p>
-                GitHub:
-                <a href="https://github.com/DiegoBarrosA" 
-                    >github.com/DiegoBarrosA</a
-                >
-            </p>
+           
                 <p>
                     <i class="fa-solid fa-envelope"></i>
                     <a href="mailto:contact@diegobarrosaraya.com">contact@diegobarrosaraya.com</a>
