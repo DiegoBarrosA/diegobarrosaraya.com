@@ -1,6 +1,21 @@
 <!doctype html>
 <html lang="en">
     <head>
+                <meta name="description" content="Diego Barros - Senior IT Engineer, Consultant, and Open-Source Advocate. Portfolio, blog, and documentation.">
+                <meta name="author" content="Diego Barros">
+                <meta property="og:title" content="Diego Barros - Senior IT Engineer">
+                <meta property="og:description" content="Portfolio, blog, and documentation by Diego Barros. Open-source, Linux, DevOps, and more.">
+                <meta property="og:type" content="website">
+                <meta property="og:url" content="https://diegobarrosaraya.com/">
+                <meta property="og:image" content="https://diegobarrosaraya.com/me.jpg">
+                <!-- Analytics placeholder -->
+                <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX-X"></script>
+                <script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', 'UA-XXXXXXX-X');
+                </script> -->
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Diego Barros - Senior IT Engineer</title>
@@ -12,62 +27,59 @@
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Fantasque+Sans+Mono:wght@400;700&display=swap"
-            rel="stylesheet"
-        />
-        <style>
-            body {
-                font-family: "Fantasque Sans Mono", monospace;
-                background-color: #212121;
-                color: #eeffff;
-                margin: 0;
-                padding: 0;
-                line-height: 1.6;
-            }
-            .container {
-                max-width: 800px;
-                margin: auto;
-                padding: 20px;
-                text-align: center;
-            }
-            .profile-pic {
-                border-radius: 50%;
-                width: 200px;
-                height: 200px;
-                border: 5px solid #82aaff;
-                background-color: #353535;
-                margin: 0 auto;
-                overflow: hidden;
-            }
-            .profile-pic img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            h1 {
-                color: #82aaff;
-            }
-            h2 {
-                color: #c3e88d;
-            }
-            a {
-                color: #89ddff;
-                text-decoration: none;
-            }
-            a:hover {
-                color: #ffcb6b;
-            }
+    <link rel="stylesheet" href="https://diegobarrosaraya-assets.github.io/shared-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
         </style>
     </head>
     <body>
-        <div class="container">
+    <a href="#main-content" class="skip-link" style="position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;background:#212121;color:#fff;z-index:100;">Skip to main content</a>
+    <nav class="main-nav" style="margin: 0 auto; max-width: 800px; padding: 20px 0 0 0; text-align: center;">
+            <a href="https://diegobarrosaraya.com/">Home</a> |
+            <a href="https://blog.diegobarrosaraya.com/">Blog</a> |
+            <a href="https://docs.diegobarrosaraya.com/">Docs</a>
+        </nav>
+    <div id="main-content" class="container">
+    <div style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; margin: 32px 0;">
+                <section style="margin: 48px 0;">
+                        <h2 style="color:#82aaff;">Featured Projects</h2>
+                        <div id="featured-projects" style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: center;"></div>
+                        <script>
+                        fetch('https://docs.diegobarrosaraya.com/projects.json')
+                            .then(r => r.json())
+                            .then(projects => {
+                                const container = document.getElementById('featured-projects');
+                                projects.forEach(project => {
+                                    const card = document.createElement('div');
+                                    card.style = 'background: #232946; color: #fff; border-radius: 16px; box-shadow: 0 2px 8px #0002; padding: 24px 28px; min-width: 320px; max-width: 480px; flex: 1 1 320px;';
+                                    card.innerHTML = `
+                                        <h3 style="margin-top:0;">${project.name}</h3>
+                                        <div style="font-size: 0.95em; color: #c3e88d; margin-bottom: 12px;">${project.excerpt || ''}</div>
+                                        <a href="${project.github}" style="color:#89ddff;">Ver en GitHub</a>
+                                        <a href="${project.url}" style="color:#89ddff; margin-left: 16px;">Ver documentación</a>
+                                    `;
+                                    container.appendChild(card);
+                                });
+                            })
+                            .catch(() => {
+                                document.getElementById('featured-projects').innerHTML = '<p style="color:#ffcb6b;">No se pudieron cargar los proyectos destacados.</p>';
+                            });
+                        </script>
+                </section>
+            <a href="https://blog.diegobarrosaraya.com/" style="display: block; background: #232946; color: #fff; border-radius: 16px; box-shadow: 0 2px 8px #0002; padding: 32px 40px; min-width: 220px; text-align: center; text-decoration: none; transition: transform 0.1s; font-size: 1.2em; font-weight: bold;">
+                Blog
+                <div style="font-size: 0.95em; font-weight: normal; margin-top: 12px; color: #c3e88d;">Articles, guides, and thoughts on open-source, Linux, and tech.</div>
+            </a>
+            <a href="https://docs.diegobarrosaraya.com/" style="display: block; background: #232946; color: #fff; border-radius: 16px; box-shadow: 0 2px 8px #0002; padding: 32px 40px; min-width: 220px; text-align: center; text-decoration: none; transition: transform 0.1s; font-size: 1.2em; font-weight: bold;">
+                Docs
+                <div style="font-size: 0.95em; font-weight: normal; margin-top: 12px; color: #c3e88d;">Documentation and project notes for my open-source work.</div>
+            </a>
+        </div>
             <h1>Diego Barros</h1>
             <p>Senior IT Engineer & Technical Consultant</p>
             <!-- Placeholder for the photo -->
 
             <div class="profile-pic">
-                <img src="me.jpg" alt="Diego Barros" />
+                <img src="me.jpg" alt="Diego Barros" width="200" height="200" loading="lazy" />
             </div>
             <h2>About Me</h2>
             <p>
@@ -116,30 +128,33 @@
                     >github.com/DiegoBarrosA</a
                 >
             </p>
-            <p>
-                Blog:
-                <a href="https://blog.diegobarrosaraya.com/" 
-                    >blog.diegobarrosaraya.com</a
-                >
-                |
-                <a
-                    href="https://blog.diegobarrosaraya.com/feed.xml"
-                    
-                    >RSS Feed</a
-                >
-            </p>
-             <p>
-                My personal projects documentation pages:
-                <a href="https://docs.diegobarrosaraya.com/" 
-                    >docs.diegobarrosaraya.com</a
-                >
-                |
-                <a
-                    href="https://docs.diegobarrosaraya.com/feed.xml"
-                    
-                    >RSS Feed</a
-                >
-            </p>
+                <p>
+                    <i class="fa-solid fa-envelope"></i>
+                    <a href="mailto:contact@diegobarrosaraya.com">contact@diegobarrosaraya.com</a>
+                </p>
+                <p>
+                    <i class="fa-brands fa-linkedin"></i>
+                    <a href="https://linkedin.com/in/diegobarrosaraya">linkedin.com/in/diegobarrosaraya</a>
+                </p>
+                <p>
+                    <i class="fa-brands fa-github"></i>
+                    <a href="https://github.com/DiegoBarrosA">github.com/DiegoBarrosA</a>
+                </p>
+                <p>
+                    <i class="fa-solid fa-blog"></i>
+                    <a href="https://blog.diegobarrosaraya.com/">blog.diegobarrosaraya.com</a>
+                    |
+                    <i class="fa-solid fa-rss"></i>
+                    <a href="https://blog.diegobarrosaraya.com/feed.xml">RSS Feed</a>
+                </p>
+                <p>
+                    <i class="fa-solid fa-book"></i>
+                    My personal projects documentation pages:
+                    <a href="https://docs.diegobarrosaraya.com/">docs.diegobarrosaraya.com</a>
+                    |
+                    <i class="fa-solid fa-rss"></i>
+                    <a href="https://docs.diegobarrosaraya.com/feed.xml">RSS Feed</a>
+                </p>
         </div>
     </body>
 </html>
