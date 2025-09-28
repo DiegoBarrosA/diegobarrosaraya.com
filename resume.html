@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta name="description" content="Diego Barros - Senior IT Engineer Resume">
+    <meta name="author" content="Diego Barros">
+    <meta property="og:url" content="https://diegobarrosaraya.com/resume">
+    <meta property="og:image" content="https://diegobarrosaraya.com/me.jpg">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume - Diego Barros</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="alternate icon" href="favicon.ico" />
+    <link rel="mask-icon" href="favicon.svg" color="#82aaff" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://diegobarrosa.github.io/diegobarrosaraya-assets/shared-theme.css">
+    <link rel="stylesheet" href="https://diegobarrosa.github.io/diegobarrosaraya-assets/shared-footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        crossorigin="anonymous">
+    <script src="https://diegobarrosa.github.io/diegobarrosaraya-assets/shared-theme.js"></script>
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link"
+        style="position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;background:#212121;color:#fff;z-index:100;">Skip
+        to main content</a>
+    <nav class="main-nav" style="margin: 0 auto; max-width: 800px; padding: 20px 0 0 0; text-align: center;">
+        <a href="https://diegobarrosaraya.com/"><i class="fa-solid fa-house"></i> Home</a> |
+        <a href="https://blog.diegobarrosaraya.com/"><i class="fa-solid fa-blog"></i> Blog</a> |
+        <a href="https://docs.diegobarrosaraya.com/"><i class="fa-solid fa-book"></i> Docs</a> |
+        <a href="resume.html" class="active"><i class="fa-solid fa-file-pdf"></i> Resume</a>
+        <button class="theme-toggle" aria-label="Toggle dark/light mode" style="vertical-align:middle;"><i
+                class="fa-solid fa-moon"></i></button>
+    </nav>
+    
+    <div id="main-content" class="container">
+        <h1>Resume</h1>
+        
+        <div class="text-center" style="margin-bottom: 30px;">
+            <button id="download-pdf-link" class="btn btn-primary">
+                <i class="fa-solid fa-file-pdf"></i> Download PDF Resume
+            </button>
+        </div>
+        
+        <div id="resume-display" class="card">
+            <div id="resume-content">
+                <p class="text-center text-muted">
+                    <i class="fa-solid fa-spinner fa-spin"></i> Loading resume...
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-links" style="text-align: center;">
+            <span><i class="fa-solid fa-envelope"></i> <a
+                    href="mailto:contact@diegobarrosaraya.com">contact@diegobarrosaraya.com</a></span>
+            <span><i class="fa-brands fa-linkedin"></i> <a
+                    href="https://linkedin.com/in/diegobarrosaraya">LinkedIn</a></span>
+            <span><i class="fa-brands fa-github"></i> <a href="https://github.com/DiegoBarrosA">GitHub</a></span>
+            <span><i class="fa-solid fa-blog"></i> <a href="https://blog.diegobarrosaraya.com/">Blog</a> <span>|</span>
+                <i class="fa-solid fa-rss"></i> <a href="https://blog.diegobarrosaraya.com/feed.xml">RSS</a></span>
+            <span><i class="fa-solid fa-book"></i> <a href="https://docs.diegobarrosaraya.com/">Docs</a> <span>|</span>
+                <i class="fa-solid fa-rss"></i> <a href="https://docs.diegobarrosaraya.com/feed.xml">RSS</a></span>
+        </div>
+    </footer>
+
+    <!-- Resume functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        // Resume functionality
+        class ResumeManager {
+            constructor() {
+                this.resumeApiUrl = 'https://api.github.com/repos/DiegoBarrosA/diego-barros-resume-generator/contents/docs/resume.md';
+                this.resumeContent = null;
+                this.setupEventListeners();
+                this.loadResumeContent();
+            }
+
+            setupEventListeners() {
+                const downloadBtn = document.getElementById('download-pdf-link');
+                if (downloadBtn) {
+                    downloadBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.downloadPDF();
+                    });
+                }
+            }
+
+            async loadResumeContent() {
+                const resumeMarkdown = await this.fetchResumeContent();
+                if (resumeMarkdown) {
+                    this.resumeContent = resumeMarkdown;
+                    this.displayResumeContent(resumeMarkdown);
+                } else {
+                    this.showError();
+                }
+            }
+
+            displayResumeContent(markdown) {
+                const contentDiv = document.getElementById('resume-content');
+                if (contentDiv) {
+                    contentDiv.innerHTML = this.markdownToHtml(markdown);
+                }
+            }
+
+            showError() {
+                const contentDiv = document.getElementById('resume-content');
+                if (contentDiv) {
+                    contentDiv.innerHTML = '<p class="text-center" style="color: var(--danger-color, #e74c3c);"><i class="fa-solid fa-exclamation-triangle"></i> Unable to load resume content. Please try again later.</p>';
+                }
+            }
+
+            async fetchResumeContent() {
+                try {
+                    const response = await fetch(this.resumeApiUrl);
+                    const data = await response.json();
+                    const content = atob(data.content); // Decode base64 content
+                    return content;
+                } catch (error) {
+                    console.error('Error fetching resume:', error);
+                    return null;
+                }
+            }
+
+            async downloadPDF() {
+                if (this.resumeContent) {
+                    // Create a clean container for PDF generation
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = this.markdownToHtml(this.resumeContent);
+                    tempDiv.style.cssText = 'padding: 30px; font-family: Georgia, serif; line-height: 1.6; color: #333; background: white; max-width: none;';
+                    
+                    // Add some styling for PDF
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        h1 { font-size: 24px; margin-bottom: 10px; border-bottom: 2px solid #333; padding-bottom: 5px; }
+                        h2 { font-size: 20px; margin: 20px 0 10px 0; color: #555; }
+                        h3 { font-size: 16px; margin: 15px 0 5px 0; color: #666; }
+                        ul { margin: 10px 0; padding-left: 20px; }
+                        li { margin: 5px 0; }
+                        p { margin: 8px 0; }
+                    `;
+                    tempDiv.appendChild(style);
+                    
+                    html2pdf().from(tempDiv).set({
+                        margin: 0.5,
+                        filename: 'diego-barros-resume.pdf',
+                        html2canvas: { scale: 1.5, useCORS: true },
+                        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+                    }).save();
+                } else {
+                    alert('Resume content not loaded yet. Please try again in a moment.');
+                }
+            }
+
+            markdownToHtml(markdown) {
+                // Enhanced markdown to HTML conversion
+                let html = markdown
+                    // Remove any leading/trailing whitespace
+                    .trim()
+                    // Headers (must be at start of line)
+                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                    // Bold and italic
+                    .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/gim, '<em>$1</em>')
+                    // Links
+                    .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+                    // Code blocks (simple)
+                    .replace(/`([^`]+)`/gim, '<code>$1</code>')
+                    // Horizontal rules
+                    .replace(/^---$/gim, '<hr>')
+                    // Lists (unordered)
+                    .replace(/^\- (.*$)/gim, '<li>$1</li>')
+                    .replace(/^\* (.*$)/gim, '<li>$1</li>')
+                    // Lists (ordered)
+                    .replace(/^(\d+)\. (.*$)/gim, '<li>$2</li>');
+
+                // Convert double line breaks to paragraph breaks
+                html = html.replace(/\n\n/g, '</p><p>');
+                
+                // Convert remaining single line breaks to <br>
+                html = html.replace(/\n/g, '<br>');
+                
+                // Wrap in paragraphs
+                html = '<p>' + html + '</p>';
+                
+                // Clean up empty paragraphs
+                html = html.replace(/<p><\/p>/g, '');
+                
+                // Wrap consecutive list items in ul tags
+                html = html.replace(/(<li>.*?<\/li>)(\s*<li>.*?<\/li>)*/gims, function(match) {
+                    return '<ul>' + match + '</ul>';
+                });
+                
+                // Clean up paragraphs around headers
+                html = html.replace(/<p>(<h[1-6]>.*?<\/h[1-6]>)<\/p>/gim, '$1');
+                
+                // Clean up paragraphs around lists
+                html = html.replace(/<p>(<ul>.*?<\/ul>)<\/p>/gims, '$1');
+                
+                // Clean up paragraphs around hrs
+                html = html.replace(/<p>(<hr[^>]*>)<\/p>/gim, '$1');
+
+                return html;
+            }
+        }
+
+        // Initialize resume manager when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new ResumeManager();
+        });
+    </script>
+
+    <!-- Theme management fallback -->
+    <script>
+        // Simple fallback theme toggle if shared script fails
+        if (!window.ThemeManager) {
+            const btn = document.querySelector('.theme-toggle');
+            btn && btn.addEventListener('click', () => {
+                const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                btn.innerHTML = theme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+            });
+            
+            // Simple initialization
+            const saved = localStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', saved);
+            btn && (btn.innerHTML = saved === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>');
+        }
+    </script>
+
+</html>
