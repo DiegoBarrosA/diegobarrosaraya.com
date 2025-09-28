@@ -3,7 +3,35 @@
 
 <head>
     <meta name="description"
-        content="Diego Barros - Senior IT Engineer, Consultant, and Open-Source Advocate. Portfolio, blog, and documentation.">
+                Beyond my professional work, I'm an avid explorer of both legacy Unix systems and cutting-edge Linux
+            distributions, driven by a passion for open-source technology and continuous learning.<br /><br />
+            Let's connect to discuss IT infrastructure, technical innovation, or solving complex challenges with
+            technology.
+        </p>
+
+        <!-- Resume Section -->
+        <div id="resume" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd;">
+            <h2 style="text-align: center;">Resume</h2>
+            <p style="text-align: center; margin-bottom: 20px;">
+                <a href="#" id="view-resume-link" style="text-decoration: none; margin-right: 20px;">View Resume</a>
+                <a href="#" id="download-pdf-link" style="text-decoration: none; margin-right: 20px;">Download PDF</a>
+                <a href="#" id="download-md-link" style="text-decoration: none;">Download Markdown</a>
+            </p>
+            
+            <!-- Resume Display Area -->
+            <div id="resume-display" style="display: none; max-width: 800px; margin: 20px auto; padding: 20px; border: 1px solid #eee; font-family: Georgia, serif; line-height: 1.6;">
+                <div id="resume-content">
+                    <!-- Resume content will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Loading indicator -->
+            <div id="resume-loading" style="display: none; text-align: center; padding: 20px; color: #666;">
+                Loading resume...
+            </div>
+        </div>
+
+    </div>tent="Diego Barros - Senior IT Engineer, Consultant, and Open-Source Advocate. Portfolio, blog, and documentation.">
     <meta name="author" content="Diego Barros">
     <meta property="og:title" content="Diego Barros - Senior IT Engineer">
     <meta property="og:description"
@@ -35,6 +63,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         crossorigin="anonymous">
     <script src="https://diegobarrosa.github.io/diegobarrosaraya-assets/shared-theme.js"></script>
+    
+    <style>
+        #resume-display {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 
@@ -45,7 +83,8 @@
     <nav class="main-nav" style="margin: 0 auto; max-width: 800px; padding: 20px 0 0 0; text-align: center;">
         <a href="https://diegobarrosaraya.com/"><i class="fa-solid fa-house"></i> Home</a> |
         <a href="https://blog.diegobarrosaraya.com/"><i class="fa-solid fa-blog"></i> Blog</a> |
-        <a href="https://docs.diegobarrosaraya.com/"><i class="fa-solid fa-book"></i> Docs</a>
+        <a href="https://docs.diegobarrosaraya.com/"><i class="fa-solid fa-book"></i> Docs</a> |
+        <a href="#resume"><i class="fa-solid fa-file-pdf"></i> Resume</a>
         <button class="theme-toggle" aria-label="Toggle dark/light mode" style="vertical-align:middle;"><i
                 class="fa-solid fa-moon"></i></button>
     </nav>
@@ -93,6 +132,143 @@
     </footer>
     </div>
 </body>
+<!-- Resume functionality -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    // Resume functionality
+    class ResumeManager {
+        constructor() {
+            this.resumeApiUrl = 'https://api.github.com/repos/DiegoBarrosA/diego-barros-resume-generator/contents/docs/resume.md';
+            this.setupEventListeners();
+        }
+
+        setupEventListeners() {
+            document.getElementById('view-resume-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                this.viewResume();
+            });
+            document.getElementById('download-pdf-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                this.downloadPDF();
+            });
+            document.getElementById('download-md-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                this.downloadMarkdown();
+            });
+        }
+
+        async fetchResumeContent() {
+            try {
+                const response = await fetch(this.resumeApiUrl);
+                const data = await response.json();
+                const content = atob(data.content); // Decode base64 content
+                return content;
+            } catch (error) {
+                console.error('Error fetching resume:', error);
+                return null;
+            }
+        }
+
+        async viewResume() {
+            const display = document.getElementById('resume-display');
+            const content = document.getElementById('resume-content');
+            const loading = document.getElementById('resume-loading');
+            
+            if (display.style.display === 'none') {
+                loading.style.display = 'block';
+                
+                const resumeMarkdown = await this.fetchResumeContent();
+                if (resumeMarkdown) {
+                    // Convert markdown to HTML (simplified conversion)
+                    const htmlContent = this.markdownToHtml(resumeMarkdown);
+                    content.innerHTML = htmlContent;
+                } else {
+                    content.innerHTML = '<p style="color: var(--error-color);">Error loading resume. Please try again later.</p>';
+                }
+                
+                loading.style.display = 'none';
+                display.style.display = 'block';
+                document.getElementById('view-resume-link').textContent = 'Hide Resume';
+            } else {
+                display.style.display = 'none';
+                document.getElementById('view-resume-link').textContent = 'View Resume';
+            }
+        }
+
+        async downloadPDF() {
+            const loading = document.getElementById('resume-loading');
+            loading.style.display = 'block';
+            
+            const resumeMarkdown = await this.fetchResumeContent();
+            if (resumeMarkdown) {
+                // Create a clean container for PDF generation
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = this.markdownToHtml(resumeMarkdown);
+                tempDiv.style.cssText = 'padding: 30px; font-family: Georgia, serif; line-height: 1.5; color: #333; background: white; max-width: none;';
+                
+                html2pdf().from(tempDiv).set({
+                    margin: 0.5,
+                    filename: 'diego-barros-resume.pdf',
+                    html2canvas: { scale: 1.5, useCORS: true },
+                    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+                }).save();
+            }
+            
+            loading.style.display = 'none';
+        }
+
+        async downloadMarkdown() {
+            const loading = document.getElementById('resume-loading');
+            loading.style.display = 'block';
+            
+            const resumeMarkdown = await this.fetchResumeContent();
+            if (resumeMarkdown) {
+                const blob = new Blob([resumeMarkdown], { type: 'text/markdown' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'diego-barros-resume.md';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+            
+            loading.style.display = 'none';
+        }
+
+        markdownToHtml(markdown) {
+            // Simple markdown to HTML conversion
+            let html = markdown
+                // Headers
+                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                // Bold
+                .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
+                // Italic
+                .replace(/\*(.*)\*/gim, '<em>$1</em>')
+                // Links
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank">$1</a>')
+                // Lists
+                .replace(/^\- (.*$)/gim, '<li>$1</li>')
+                .replace(/^(\d+)\. (.*$)/gim, '<li>$2</li>')
+                // Line breaks
+                .replace(/\n/gim, '<br>');
+            
+            // Wrap lists
+            html = html.replace(/(<li>.*<\/li>)/gims, '<ul>$1</ul>');
+            
+            return html;
+        }
+    }
+
+    // Initialize resume manager when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        new ResumeManager();
+    });
+</script>
+
 <!-- Theme management is handled by shared-theme.js -->
 <!-- Fallback script in case shared-theme.js fails to load -->
 <script>
