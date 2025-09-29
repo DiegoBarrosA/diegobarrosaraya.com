@@ -24,57 +24,10 @@ jobs:
         python-version: '3.9'
         
     - name: Install dependencies
-      run: |
-        pip install requests
+      run: pip install requests
         
-    - name: Fetch and update resume
-      run: |
-        python3 << 'EOF'
-        import requests
-        import json
-        from datetime import datetime
-        
-        # Fetch the resume markdown from the generator repository
-        resume_url = "https://api.github.com/repos/DiegoBarrosA/diego-barros-resume-generator/contents/docs/resume.md"
-        
-        try:
-            response = requests.get(resume_url)
-            if response.status_code == 200:
-                data = response.json()
-                # Decode the base64 content
-                import base64
-                resume_content = base64.b64decode(data['content']).decode('utf-8')
-                
-                # Create Jekyll front matter and content
-                jekyll_content = f"""---
-layout: default
-title: Resume
-description: "Diego Barros Araya - Senior IT Engineer Resume"
-permalink: /resume/
-last_updated: {datetime.now().strftime('%Y-%m-%d')}
----
-
-{resume_content}
-
----
-
-**Last Updated**: {datetime.now().strftime('%B %d, %Y')}
-
-[Download PDF Resume](https://raw.githubusercontent.com/DiegoBarrosA/diego-barros-resume-generator/main/docs/resume.pdf){{: .btn .btn-primary target="_blank"}}
-"""
-                
-                # Write to resume.md
-                with open('resume.md', 'w', encoding='utf-8') as f:
-                    f.write(jekyll_content)
-                
-                print("✅ Resume updated successfully")
-            else:
-                print(f"❌ Failed to fetch resume: {response.status_code}")
-                exit(1)
-        except Exception as e:
-            print(f"❌ Error updating resume: {e}")
-            exit(1)
-        EOF
+    - name: Update resume content
+      run: python3 update_resume.py
         
     - name: Commit and push changes
       run: |
