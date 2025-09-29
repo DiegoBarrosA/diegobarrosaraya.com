@@ -66,7 +66,7 @@ sitemap_priority: 0.9
    target="_blank" 
    rel="noopener"
    download="diego-barros-resume.pdf">
-   📄 Download ATS-Optimized PDF Resume
+   <i class="fa-solid fa-file-pdf"></i> Download ATS-Optimized PDF Resume
 </a>
 </div>
 
