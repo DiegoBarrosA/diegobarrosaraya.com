@@ -29,10 +29,3 @@ Beyond my professional work, I'm an avid explorer of both legacy Unix systems an
 Let's connect to discuss IT infrastructure, technical innovation, or solving complex challenges with technology.
 {: style="text-align: center;"}
 
----
-
-## Resume
-{: style="text-align: center;"}
-
-[View Resume](/resume/) | [Download PDF](https://raw.githubusercontent.com/DiegoBarrosA/diego-barros-resume-generator/main/docs/resume.pdf)
-{: style="text-align: center;"}
