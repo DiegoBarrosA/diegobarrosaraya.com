@@ -70,7 +70,7 @@ With a strong foundation in computer science and over a decade of experience as 
    target="_blank" 
    rel="noopener"
    download="diego-barros-resume.pdf">
-   📄 Download ATS-Optimized PDF Resume
+   📄 Download PDF Resume
 </a>
 </div>
 
