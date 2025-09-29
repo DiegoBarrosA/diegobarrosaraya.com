@@ -34,5 +34,5 @@ Let's connect to discuss IT infrastructure, technical innovation, or solving com
 ## Resume
 {: style="text-align: center;"}
 
-[Download PDF](https://raw.githubusercontent.com/DiegoBarrosA/diego-barros-resume-generator/main/docs/resume.pdf) | [View Markdown](https://raw.githubusercontent.com/DiegoBarrosA/diego-barros-resume-generator/main/docs/resume.md)
+[View Resume](/resume/) | [Download PDF](https://raw.githubusercontent.com/DiegoBarrosA/diego-barros-resume-generator/main/docs/resume.pdf)
 {: style="text-align: center;"}
