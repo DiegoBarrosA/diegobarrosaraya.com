@@ -4,6 +4,8 @@ title: Resume
 description: "Diego Barros Araya - Senior IT Engineer Resume"
 permalink: /resume/
 last_updated: 2025-09-28
+robots: index, follow
+sitemap_priority: 0.9
 ---
 
 # Diego Pablo Barros Araya
@@ -58,9 +60,18 @@ With a strong foundation in computer science and over a decade of experience as 
 **AXELOS**
 *Issued: 2024*
 
-
 ---
 
 **Last Updated**: September 28, 2025
 
-[Download PDF Resume](https://raw.githubusercontent.com/DiegoBarrosA/diego-barros-resume-generator/main/docs/resume.pdf)
+<div style="text-align: center; margin: 20px 0;">
+<a href="https://raw.githubusercontent.com/DiegoBarrosA/diego-barros-resume-generator/main/docs/resume.pdf" 
+   class="btn btn-primary" 
+   target="_blank" 
+   rel="noopener"
+   download="diego-barros-resume.pdf">
+   📄 Download ATS-Optimized PDF Resume
+</a>
+</div>
+
+*This resume is automatically synchronized with the latest version from the resume generator.*
