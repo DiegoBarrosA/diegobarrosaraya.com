@@ -18,7 +18,7 @@ Let's connect to discuss IT infrastructure, technical innovation, or solving com
 </div>
 
 ## About Me
-{: style="text-align: center;"}
+{: style="text-align: center !important;"}
 
 With a strong foundation in computer science and over a decade of experience as a Linux user, I focus on implementing scalable, automated solutions in cloud-native environments (Docker, OCI) and embedded systems. My expertise also includes Atlassian products, and I have a proven track record of executing technical projects and collaborating with global technology teams to deliver efficient, high-performance IT solutions.
 
