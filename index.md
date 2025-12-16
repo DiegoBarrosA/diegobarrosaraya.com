@@ -27,5 +27,5 @@ As a Senior Engineer, I bring a track record of leading technical teams, driving
 Beyond my professional work, I'm an avid explorer of both legacy Unix systems and cutting-edge Linux distributions, driven by a passion for open-source technology and continuous learning.
 
 Let's connect to discuss IT infrastructure, technical innovation, or solving complex challenges with technology.
-{: style="text-align: center;"}
+{: style="text-align: center !important;"}
 
